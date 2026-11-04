@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasir - Triangle Sky Telomoyo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.18"></script>
+    <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone@7.26.10/babel.min.js"></script>
+    <script>window.react = window.React;</script>
+    <script crossorigin src="https://unpkg.com/lucide-react@0.468.0/dist/umd/lucide-react.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; }</style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
+        const { ShoppingCart, FileText, Tag, Clock, Plus, CheckCircle, Monitor, Smartphone, Briefcase } = LucideReact;
+
+        function KasirApp() {
+            const [cart, setCart] = useState([
+                { id: 1, name: 'Tiket Masuk', price: 50000, qty: 2 },
+                { id: 2, name: 'Kopi Susu', price: 30000, qty: 1 }
+            ]);
+
+            const products = [
+                { id: 1, name: 'Tiket Masuk', price: 50000, desc: 'Akses masuk destinasi • per orang', image: 'IMG_4926.jpg' },
+                { id: 2, name: 'Kopi Susu', price: 30000, desc: 'Hangat • teman menanti sunrise', image: 'Gemini_Generated_Image_vgzaf6vgzaf6vgza.jpg' }
+            ];
+
+            const addProduct = (p) => {
+                setCart(prev => {
+                    const exist = prev.find(i => i.id === p.id);
+                    if (exist) return prev.map(i => i.id === p.id ? { ...i, qty: i.qty + 1 } : i);
+                    return [...prev, { id: p.id, name: p.name, price: p.price, qty: 1 }];
+                });
+            };
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            return (
+                <div className="min-h-screen flex flex-col bg-slate-100 text-slate-800">
+                    {/* Review Mode Switcher Bar */}
+                    <div className="w-full bg-slate-950 border-b border-slate-800 py-2 px-4 flex justify-center items-center space-x-4 text-xs z-50 text-white">
+                        <span className="text-slate-400 font-bold">MODE REVIEW:</span>
+                        <a href="index.html" className="bg-slate-800 text-slate-300 hover:text-white px-3 py-1 rounded-lg font-semibold flex items-center space-x-1.5 transition"><Smartphone size={14}/><span>Pelanggan (Mobile)</span></a>
+                        <a href="kasir.html" className="bg-blue-600 text-white px-3 py-1 rounded-lg font-semibold flex items-center space-x-1.5"><Monitor size={14}/><span>Kasir (POS)</span></a>
+                        <a href="manajer.html" className="bg-slate-800 text-slate-300 hover:text-white px-3 py-1 rounded-lg font-semibold flex items-center space-x-1.5 transition"><Briefcase size={14}/><span>Manajer (Dasbor)</span></a>
+                    </div>
+
+                    <div className="flex-1 flex">
+                        <aside className="w-20 bg-white border-r border-slate-200 flex flex-col items-center py-6 space-y-8">
+                            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold">TS</div>
+                            <nav className="flex flex-col space-y-6 text-slate-400">
+                                <button className="flex flex-col items-center text-blue-600"><ShoppingCart size={22}/><span className="text-[10px]">Penjualan</span></button>
+                                <button className="flex flex-col items-center"><FileText size={22}/><span className="text-[10px]">Transaksi</span></button>
+                                <button className="flex flex-col items-center"><Tag size={22}/><span className="text-[10px]">Voucher</span></button>
+                                <button className="flex flex-col items-center"><Clock size={22}/><span className="text-[10px]">Antrean</span></button>
+                            </nav>
+                        </aside>
+                        <div className="flex-1 flex flex-col min-w-0">
+                            <header className="h-16 bg-white border-b border-slate-200 px-8 flex justify-between items-center">
+                                <span className="font-bold text-sm">Tiket & Voucher</span>
+                                <div className="flex items-center space-x-4">
+                                    <span className="bg-emerald-50 text-emerald-700 text-xs px-3 py-1 rounded-full font-medium border border-emerald-200">Loket 01 - Terhubung</span>
+                                    <div className="text-xs font-bold">Rani Aulia (Kasir)</div>
+                                </div>
+                            </header>
+                            <div className="flex-1 p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                <div className="lg:col-span-2 space-y-6">
+                                    <h2 className="text-xl font-bold">Penjualan baru</h2>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {products.map(p => (
+                                            <div key={p.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                                                <img src={p.image} alt={p.name} className="w-full h-28 object-cover rounded-xl bg-slate-100" style={{objectPosition: p.id === 1 ? "center 68%" : "center"}}/>
+                                                <div><h3 className="font-bold text-sm">{p.name}</h3><p className="text-xs text-slate-400">{p.desc}</p></div>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="font-bold text-blue-600">Rp {p.price.toLocaleString()}</span>
+                                                    <button onClick={() => addProduct(p)} className="w-8 h-8 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center"><Plus size={16}/></button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-6">
+                                    <div className="space-y-4">
+                                        <h3 className="font-bold text-sm">Ringkasan pesanan</h3>
+                                        {cart.map((item, idx) => (
+                                            <div key={idx} className="flex justify-between items-center text-xs">
+                                                <span>{item.name} (x{item.qty})</span>
+                                                <span className="font-bold">Rp {(item.price*item.qty).toLocaleString()}</span>
+                                            </div>
+                                        ))}
+                                        <div className="border-t pt-4 flex justify-between font-bold text-base">
+                                            <span>Total bayar</span><span className="text-blue-600">Rp {subtotal.toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                    <button onClick={() => alert('Pembayaran berhasil!')} className="w-full bg-blue-600 text-white font-bold py-3 rounded-xl text-xs flex items-center justify-center space-x-2">
+                                        <CheckCircle size={16}/><span>Bayar & cetak tiket</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        ReactDOM.createRoot(document.getElementById('root')).render(<KasirApp />);
+    </script>
+</body>
+</html>
