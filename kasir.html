@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS Kasir — Triangle Sky Telomoyo</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .pos-layout {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 24px;
+      max-width: 1280px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+    @media (max-width: 860px) {
+      .pos-layout { grid-template-columns: 1fr; }
+    }
+    .pos-panel {
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--latte);
+    }
+    .filter-tabs { display: flex; gap: 10px; margin: 16px 0 20px; flex-wrap: wrap; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+      gap: 14px;
+    }
+    .pos-card {
+      border: 1.5px solid var(--latte);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      transition: 0.15s;
+      background: var(--bg-cream);
+    }
+    .pos-card:hover { border-color: var(--caramel); background: #fff; transform: translateY(-2px); }
+    .pos-card h4 { font-size: 0.95rem; margin: 8px 0 4px; }
+    .pos-card .price { font-weight: 700; color: var(--caramel); }
+
+    .order-list { min-height: 170px; border-bottom: 1px dashed var(--latte); padding-bottom: 12px; margin-bottom: 16px; }
+    .order-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; font-size: 0.9rem; }
+    .input-group { margin-bottom: 12px; }
+    .input-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; color: var(--text-muted); }
+    .input-control {
+      width: 100%; padding: 10px 12px; border-radius: 10px;
+      border: 1.5px solid var(--latte); font-size: 0.95rem;
+    }
+    .pay-methods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .pay-btn { padding: 10px; border: 1.5px solid var(--latte); border-radius: 10px; background: #fff; font-weight: 600; cursor: pointer; }
+    .pay-btn.active { border-color: var(--caramel); background: #FDF3EC; color: var(--caramel); }
+    .summary-line { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.9rem; }
+    .summary-total { font-size: 1.25rem; font-weight: 700; color: var(--espresso); border-top: 1px solid var(--latte); padding-top: 10px; margin-top: 8px; }
+  </style>
+</head>
+<body class="triangle-pattern-bg">
+  <nav class="hub-bar">
+    <div class="triangle-logo">
+      <span class="triangle-mark"></span>
+      <span>TRIANGLE SKY POS • Lantai 2 (Kasir: Rani Aulia)</span>
+    </div>
+    <div class="hub-links">
+      <a href="index.html">1. App Pelanggan</a>
+      <a href="kasir.html" class="active">2. POS Kasir</a>
+      <a href="manajer.html">3. Dasbor Manajer</a>
+    </div>
+  </nav>
+
+  <div class="pos-layout">
+    <section class="pos-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Katalog Coffee & Tiket Rooftop</h2>
+        <span class="badge badge-active">Loket 1 • Shift Sunrise</span>
+      </div>
+
+      <div class="filter-tabs">
+        <button class="btn btn-dark" onclick="filterMenu('all')">Semua</button>
+        <button class="btn btn-outline" onclick="filterMenu('ticket')">▲ Tiket Sunrise</button>
+        <button class="btn btn-outline" onclick="filterMenu('coffee')">☕ Coffee Bar</button>
+        <button class="btn btn-outline" onclick="filterMenu('pastry')">🥐 Pastry</button>
+      </div>
+
+      <div class="product-grid" id="pos-catalog"></div>
+    </section>
+
+    <section class="pos-panel">
+      <h2 style="margin-bottom:14px;">Ringkasan Pesanan</h2>
+      <div class="order-list" id="order-items">
+        <p style="color:var(--text-muted); font-size:0.85rem;">Pilih tiket atau menu kopi di sebelah kiri...</p>
+      </div>
+
+      <div class="input-group">
+        <label>Kode Voucher Triangle Sky</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="voucher-code" class="input-control" placeholder="Contoh: TRIANGLE10">
+          <button class="btn btn-outline" onclick="checkVoucher()">Validasi</button>
+        </div>
+      </div>
+
+      <label style="font-size:0.8rem; font-weight:600; color:var(--text-muted); display:block; margin-bottom:6px;">Metode Pembayaran</label>
+      <div class="pay-methods">
+        <button class="pay-btn active" onclick="selectPay(this, 'Tunai')">💵 Tunai</button>
+        <button class="pay-btn" onclick="selectPay(this, 'QRIS')">📱 QRIS</button>
+        <button class="pay-btn" onclick="selectPay(this, 'Debit')">💳 Debit</button>
+      </div>
+
+      <div class="input-group">
+        <label>Uang Diterima (Rp)</label>
+        <input type="number" id="cash-received" class="input-control" placeholder="150000" oninput="calcChange()">
+      </div>
+
+      <div class="summary-line"><span>Subtotal</span><span id="sub-val">Rp 0</span></div>
+      <div class="summary-line" style="color:var(--success);"><span>Potongan Voucher</span><span id="disc-val">- Rp 0</span></div>
+      <div class="summary-line summary-total"><span>Total Bayar</span><span id="total-val">Rp 0</span></div>
+      <div class="summary-line" style="margin-top:8px; font-weight:600;"><span>Kembalian</span><span id="change-val" style="color:var(--caramel);">Rp 0</span></div>
+
+      <button class="btn btn-primary" style="width:100%; margin-top:16px; padding:14px;" onclick="completeTransaction()">
+        ▲ Bayar & Cetak Tiket Rooftop
+      </button>
+    </section>
+  </div>
+
+  <script src="js/kasir.js"></script>
+</body>
+</html>
