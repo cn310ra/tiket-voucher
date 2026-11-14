@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2457d6">
+  <title>Biru Kopi — Pesan Kopi</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232457d6'/%3E%3Cpath d='M9 12h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5zM21 14h2a2 2 0 0 1 0 4h-2' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body class="page-app" data-page="customer">
+  <div class="stage">
+
+    <aside class="stage-info">
+      <span class="brand"><span class="brand-mark" data-i="coffee"></span> Biru Kopi</span>
+      <h1>Pesan kopi favoritmu tanpa antre.</h1>
+      <p>Ini tampilan <b>aplikasi pelanggan</b>. Pesanan yang masuk langsung muncul di layar kasir dan dasbor manajer.</p>
+      <div class="links">
+        <a class="btn primary" href="kasir.html">Buka POS Kasir →</a>
+        <a class="btn outline" href="manajer.html">Buka Dasbor Manajer →</a>
+        <button class="link" id="resetDemo" style="text-align:left">Reset data demo</button>
+      </div>
+    </aside>
+
+    <div class="phone">
+      <div class="app">
+        <main class="views">
+
+          <!-- ============ MENU ============ -->
+          <section class="view active" id="view-menu">
+            <div class="hero">
+              <div class="hero-top">
+                <span class="brand"><span class="brand-mark" data-i="coffee"></span> Biru Kopi</span>
+                <button class="icon-btn" style="color:#fff" aria-label="Notifikasi" data-i="bell"></button>
+              </div>
+              <h1>Kopi pilihan, diseduh segar.</h1>
+              <p>Pesan dari meja atau bawa pulang. Siap dalam hitungan menit.</p>
+              <span class="open"><i data-i="clock"></i> Buka setiap hari · 07.00–21.00</span>
+              <svg class="cup" viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M22 8c-3 4 3 6 0 10M32 6c-3 4 3 6 0 10M42 8c-3 4 3 6 0 10" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M12 26h34v14a14 14 0 0 1-14 14h-6a14 14 0 0 1-14-14z" fill="#fff"/>
+                <path d="M14 28h30v6H14z" fill="#93adeb"/>
+                <path d="M46 30h4a6 6 0 0 1 0 12h-5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="page-head"><h2>Menu</h2><p>Pilih kategori, lalu tambahkan ke keranjang.</p></div>
+            <div class="cat-bar" id="catBar"></div>
+            <div class="menu-grid" id="menuList"></div>
+          </section>
+
+          <!-- ============ PESANAN ============ -->
+          <section class="view" id="view-orders">
+            <div class="page-head"><h2>Pesanan saya</h2><p>Status diperbarui otomatis oleh barista.</p></div>
+            <div class="orders-wrap" id="orderList"></div>
+          </section>
+        </main>
+
+        <button class="cartbar" id="cartBar" data-act="open-cart" hidden>
+          <span id="cartBarText"></span><span id="cartBarTotal"></span>
+        </button>
+
+        <nav class="tabbar" aria-label="Navigasi utama">
+          <button class="tab on" data-go="menu"><i data-i="coffee"></i>Menu</button>
+          <button class="tab" data-go="orders"><i data-i="receipt"></i>Pesanan<span class="dot" id="ordersDot" hidden>0</span></button>
+        </nav>
+
+        <div class="sheet-backdrop" id="cartSheet" hidden>
+          <div class="sheet">
+            <div class="sheet-head"><h3>Keranjang</h3><button class="icon-btn" data-act="close-cart" aria-label="Tutup" data-i="x"></button></div>
+            <div class="sheet-body" id="cartBody"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

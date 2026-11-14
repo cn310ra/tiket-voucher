@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2457d6">
+  <title>Biru Kopi — Dasbor Manajer</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232457d6'/%3E%3Cpath d='M9 12h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5zM21 14h2a2 2 0 0 1 0 4h-2' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="manajer">
+  <div class="dash">
+
+    <aside class="side">
+      <a class="brand" href="index.html"><span class="brand-mark" data-i="coffee"></span> Biru Kopi</a>
+      <div class="group">RUANG KERJA</div>
+      <button class="nav on" data-scroll="top"><i data-i="grid"></i>Dasbor</button>
+      <button class="nav" data-scroll="transaksi"><i data-i="receipt"></i>Transaksi</button>
+      <button class="nav" data-soon><i data-i="coffee"></i>Menu</button>
+      <button class="nav" data-soon><i data-i="chart"></i>Laporan</button>
+      <div class="group">ADMINISTRASI</div>
+      <button class="nav" data-soon><i data-i="users"></i>Tim &amp; hak akses</button>
+      <button class="nav" data-soon><i data-i="sliders"></i>Pengaturan</button>
+      <div class="help"><b>Buka layar kasir</b>Terima pesanan dan pembayaran di toko.<br><a href="kasir.html">Buka POS kasir →</a></div>
+    </aside>
+
+    <div class="content" id="top">
+      <header class="dtop">
+        <span>Ruang kerja / Dasbor</span>
+        <div class="right">
+          <span class="badge ok">Toko buka</span>
+          <i data-i="bell"></i>
+          <div class="user"><span class="avatar">AP</span><div><b>Aditya Prakoso</b><small>Manajer</small></div></div>
+        </div>
+      </header>
+
+      <div class="dbody">
+        <div class="dhead">
+          <div><h1>Ringkasan penjualan</h1><p>Pantau penjualan kopi harian dan pesanan terbaru.</p></div>
+          <div class="actions">
+            <label class="select-pill"><i data-i="store"></i>
+              <select id="chSel" aria-label="Filter kanal"><option value="all">Semua kanal</option><option value="Kasir">Kasir</option><option value="Aplikasi">Aplikasi</option></select></label>
+            <span class="date-pill"><i data-i="calendar"></i><span id="todayLabel"></span></span>
+            <button class="btn primary" id="downloadBtn"><i data-i="download"></i> Unduh laporan</button>
+          </div>
+        </div>
+
+        <section class="kpis">
+          <article class="card kpi"><div class="top"><span>Penjualan hari ini</span><i data-i="bag"></i></div><div class="val" id="kRevenue">Rp 0</div><div class="note" id="kRevenueNote"></div></article>
+          <article class="card kpi"><div class="top"><span>Cangkir terjual</span><i data-i="coffee"></i></div><div class="val" id="kCups">0</div><div class="note" id="kCupsNote"></div></article>
+          <article class="card kpi"><div class="top"><span>Transaksi</span><i data-i="receipt"></i></div><div class="val" id="kTx">0</div><div class="note" id="kTxNote"></div></article>
+          <article class="card kpi"><div class="top"><span>Rata-rata per transaksi</span><i data-i="chart"></i></div><div class="val" id="kAvg">Rp 0</div><div class="note" id="kAvgNote"></div></article>
+        </section>
+
+        <section class="mid">
+          <article class="card">
+            <div class="chart-head">
+              <div><h3>Tren penjualan per jam</h3><p class="sub">Pendapatan dalam rupiah · jam ditampilkan WIB</p></div>
+              <span class="badge" id="peakNote"></span>
+            </div>
+            <div class="chart" id="chart"></div>
+          </article>
+          <article class="card">
+            <h3>Menu terlaris</h3>
+            <p class="sub">Berdasarkan jumlah terjual hari ini</p>
+            <div class="toplist" id="topList"></div>
+          </article>
+        </section>
+
+        <section class="card" id="transaksi">
+          <div class="card-head">
+            <div><h3>Transaksi terkini</h3><p class="sub" id="txSub"></p></div>
+            <button class="link" id="toggleAll">Lihat semua →</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>TRANSAKSI</th><th>PELANGGAN &amp; PESANAN</th><th>PEMBAYARAN</th><th>TOTAL</th><th>STATUS</th></tr></thead>
+              <tbody id="txBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="footnote"><span id="updated"></span><span>Pesanan dari kasir &amp; aplikasi · <a class="link" href="#" id="resetDemo">Reset data demo</a></span></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

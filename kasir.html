@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2457d6">
+  <title>Biru Kopi — POS Kasir</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232457d6'/%3E%3Cpath d='M9 12h12v6a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5zM21 14h2a2 2 0 0 1 0 4h-2' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="kasir">
+  <div class="pos">
+
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:22px">
+        <a class="brand" href="index.html"><span class="brand-mark" data-i="coffee"></span> Biru Kopi</a>
+        <nav class="top-nav" aria-label="Menu kasir">
+          <a class="on" href="kasir.html"><i data-i="bag"></i>Penjualan</a>
+          <button id="queueBtn"><i data-i="receipt"></i>Antrean <span class="count" id="queueCount" hidden>0</span></button>
+          <a href="manajer.html"><i data-i="chart"></i>Dasbor</a>
+        </nav>
+      </div>
+      <div class="top-right">
+        <span class="pill"><span class="dot"></span>Kasir 01 · Terhubung</span>
+        <span id="clock" class="muted"></span>
+        <div class="user-chip"><span class="avatar">RA</span><div><b>Rani Aulia</b><small>Kasir</small></div></div>
+      </div>
+    </header>
+
+    <!-- Kolom kiri: katalog -->
+    <main class="catalog">
+      <h1>Penjualan baru</h1>
+      <p class="sub">Ketuk menu untuk menambahkan ke pesanan.</p>
+      <div class="search"><i data-i="search"></i><input id="searchInput" class="input" type="search" placeholder="Cari menu..." autocomplete="off"></div>
+      <div class="chips" id="catChips"></div>
+      <div class="kgrid" id="pgrid"></div>
+    </main>
+
+    <!-- Kolom kanan: ringkasan & pembayaran -->
+    <aside class="order" aria-label="Ringkasan pesanan">
+      <div class="order-head">
+        <div><h2>Ringkasan pesanan</h2><span class="muted" id="orderId"></span></div>
+        <div class="right"><span class="badge warn">Belum dibayar</span><button class="link danger" id="clearBtn">Kosongkan</button></div>
+      </div>
+
+      <div class="order-cust"><span class="avatar" style="width:28px;height:28px"><i data-i="user"></i></span><input id="custInput" placeholder="Nama pelanggan (opsional)" maxlength="40"></div>
+      <div class="seg" id="typeSeg"><button class="on" data-type="Dine in">Dine in</button><button data-type="Take away">Take away</button></div>
+
+      <div class="order-lines" id="orderLines"></div>
+
+      <div class="totals">
+        <div><span>Subtotal</span><span id="subVal">Rp 0</span></div>
+        <div><span>Pajak PB1 (10%)</span><span id="taxVal">Rp 0</span></div>
+        <div class="grand"><span>Total bayar</span><b id="totalVal">Rp 0</b></div>
+      </div>
+
+      <div>
+        <h4>Metode pembayaran</h4>
+        <div class="seg" id="methods"><button class="on" data-method="Tunai">Tunai</button><button data-method="QRIS">QRIS</button><button data-method="Debit">Debit</button></div>
+      </div>
+
+      <div id="cashBlock" style="display:grid;gap:12px">
+        <div class="cash-row"><label for="cashInput" class="muted">Uang diterima</label><input id="cashInput" class="input" inputmode="numeric" placeholder="Rp 0" autocomplete="off"></div>
+        <div class="quick-cash" id="quickCash"></div>
+        <div class="change-row"><span class="muted">Kembalian</span><b id="changeVal">Rp 0</b></div>
+      </div>
+
+      <span class="spacer"></span>
+      <div>
+        <button class="btn primary block lg" id="payBtn" disabled><i data-i="printer"></i> Bayar &amp; cetak struk</button>
+        <p class="hint">Struk dicetak setelah pembayaran berhasil.</p>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>
